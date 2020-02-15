@@ -1,0 +1,7 @@
+{
+    "Resources" : {
+        "Srv" : {
+            "Type" : "AWS::EC2::Instance"
+        }
+    }
+}
