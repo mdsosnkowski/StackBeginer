@@ -1,13 +1,37 @@
 {
-    "Resources" : {
-        "MyDy" : {
-            "Type" : "AWS::DynamoDB::Table",
-            "Properties" : {
-                "KeySchema" : {
-                    "AttributeName" : "test",
-                    "KeyType" : "HASH"
-                }
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "PetTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "AttributeDefinitions" : [
+                    {
+                        "AttributeName": "pet_species",
+                        "AttributeType": "S"
+                    }
+                ],
+                "KeySchema" : [
+                    {
+                        "AttributeName": "pet_species",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "TableName": "PetInventory5",
+                "BillingMode": "PAY_PER_REQUEST"
             }
         }
     }
 }
+If you set BillingMode as PROVISIONED, you must specify this property. If you set BillingMode as PAY_PER_REQUEST, you cannot specify this property
+
+AttributeDefinitions
+A list of attributes that describe the key schema for the table and indexes. Duplicates are allowed.
+
+This property is required to create a DynamoDB table.
+
+
+KeySchema - Required? YES
+Specifies the attributes that make up the primary key for the table. The attributes in the KeySchema property must also be defined in the AttributeDefinitions property.
+Required: Yes
+
+ validation error detected: Value 'PetInventory(UNIQUE NAME NEEDED)' at 'tableName' failed to satisfy constraint: Member must satisfy regular expression pattern: [a-zA-Z0-9_.-]+ (Service: AmazonDynamoDBv2; Status Code: 400; Error Code: ValidationException; 
