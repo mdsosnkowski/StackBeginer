@@ -1,11 +1,13 @@
 {
-    "AWSTemplateFormatVersion": "2010-09-09",
     "Resources" : {
-        "MyDynmo" : {
-            "Type" : "AWS::DynamoDB::Table"
-        },
-        "Mybucket" : {
-            "Type": "AWS::S3::Bucket"
+        "MyDy" : {
+            "Type" : "AWS::DynamoDB::Table",
+            "Properties" : {
+                "KeySchema" : {
+                    "AttributeName" : "test",
+                    "KeyType" : "HASH"
+                }
+            }
         }
     }
 }
