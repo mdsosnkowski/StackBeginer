@@ -5,6 +5,52 @@ Resources:
     Tags:
       - Key: Name
         Value: bastion
+    ImageId: ami-0e2ff28bfb72a4e45
+    InstanceType: t2.micro
+    SubnetId:
+      Ref: BastionSubnet
+    AvailabilityZone: us-east-1a
+  DependsOn:
+    - BastionSubnet
+
+ BastionSubnet:
+  Type: AWS::EC2::Subnet
+  Properties:
+    CidrBlock: 10.5.0.0/24
+    VpcId:
+      Ref: BastionVPC
+    AvailabilityZone: us-east-1a
+  DependsOn: BastionVPC
+
+ BastionVPC:
+  Type: AWS::EC2::VPC
+  Properties:
+    CidrBlock: 10.5.0.0/16
+
+
+================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+==================================
+======== WORKING VERSION BELOW====
+==================================
+Resources:
+ BastionNode:
+  Type: AWS::EC2::Instance
+  Properties:
+    Tags:
+      - Key: Name
+        Value: bastion
     ImageId: aami-0a887e401f7654935
     InstanceType: t2.micro
     SubnetId:
