@@ -1,41 +1,28 @@
+---- WORKING -----
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
-  BastionVPC:
-    Type: 'AWS::EC2::VPC'
-    Properties:
-      CidrBlock: 10.0.0.0/16
-  BastionSubnet:
-    Type: 'AWS::EC2::Subnet'
-    Properties:
-      CidrBlock: 10.0.0.0/24
-      AvailabilityZone: us-east-1a
-      VpcId: 
-        Ref: BastionVPC
-  BastionHost:
-    Type: 'AWS::EC2::Instance'
-    Properties:
-        ImageId: ami-
-        InstanceType: t2.micro
-        SubnetId:
-            Ref: BastionSubnet
-        AvailabilityZone: us-east-1a
-        
-        
-      
-      !!!!
- BastionNode:
-  Type: AWS::EC2::Instance
-  Properties:
-    Tags:
-      - Key: Name
-        Value: bastion
-    ImageId: ami-0e2ff28bfb72a4e45
-    InstanceType: t2.micro
-    SubnetId:
-      Ref: BastionSubnet
-    AvailabilityZone: us-east-1a
-  DependsOn:
-    - BastionSubnet
+    BastionVPC: 
+        Type: 'AWS::EC2::VPC'
+        Properties:
+            CidrBlock: 10.0.0.0/16
+            
+    BastionSubnet:
+        Type: 'AWS::EC2::Subnet'
+        Properties:
+            CidrBlock: 10.0.0.0/24
+            AvailabilityZone: us-east-1a
+            VpcId:
+                Ref: BastionVPC
+                
+    BastionHost:
+        Type: 'AWS::EC2::Instance'
+        Properties:
+            ImageId: ami-0e2ff28bfb72a4e45
+            InstanceType: t2.micro
+            AvailabilityZone: us-east-1a
+            SubnetId:
+                Ref: BastionSubnet
+            
 
 
 
