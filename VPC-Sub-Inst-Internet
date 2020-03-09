@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+    BastionVPC:
+        Type: 'AWS::EC2::VPC'
+        Properties: 
+            CidrBlock: '10.0.0.0/16'
+            
+    BastionInternetGateway:
+        Type: 'AWS::EC2::InternetGateway'
+         
+    BastionSubnet:
+        Type: 'AWS::EC2::Subnet'
+        Properties:
+            CidrBlock: '10.0.0.0/24'
+            AvailabilityZone: us-east-1a
+            VpcId:
+                Ref: BastionVPC
+                
+    BastionHost:
+        Type: 'AWS::EC2::Instance'
+        Properties:
+            InstanceType: t2.micro
+            ImageId: ami-xxxxxxxxx
+            SubnetId:
+                Ref: BastionSubnet
+    
+    MyEIP:
+        Type: AWS::EC2::EIP
+        Properties:
+             InstanceId: 
+                Ref: BastionHost
+            
