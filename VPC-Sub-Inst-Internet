@@ -1,34 +1,41 @@
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
-    BastionVPC:
-        Type: 'AWS::EC2::VPC'
-        Properties: 
-            CidrBlock: '10.0.0.0/16'
-            
-    BastionInternetGateway:
-        Type: 'AWS::EC2::InternetGateway'
-         
-    BastionSubnet:
-        Type: 'AWS::EC2::Subnet'
-        Properties:
-            CidrBlock: '10.0.0.0/24'
-            AvailabilityZone: us-east-1a
-            VpcId:
+  BastionVPC:
+    Type: 'AWS::EC2::VPC'
+    Properties: 
+      CidrBlock: '10.0.0.0/16'
+
+  BastionSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+        CidrBlock: '10.0.0.0/24'
+        AvailabilityZone: us-east-1a
+        VpcId:
                 Ref: BastionVPC
-                
-    BastionHost:
-        Type: 'AWS::EC2::Instance'
-        Properties:
-            InstanceType: t2.micro
-            ImageId: ami-0a887e401f7654935
-            SubnetId:
-                Ref: BastionSubnet
+      
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties: {}
     
-    MyEIP:
-        Type: AWS::EC2::EIP
-        Properties:
-             InstanceId: 
-                Ref: BastionHost
+  EC2VPC:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref BastionVPC
+      InternetGatewayId: !Ref InternetGateway
+                
+  BastionHost:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0a887e401f7654935
+       SubnetId:
+          Ref: BastionSubnet
+    
+  MyEIP:
+    Type: AWS::EC2::EIP
+     Properties:
+       InstanceId: 
+       Ref: BastionHost
             
 
 
