@@ -28,7 +28,11 @@ Resources:
       ImageId: ami-0a887e401f7654935
       SubnetId: !Ref BastionSubnet
       
-      
+   MyEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref BastionHost
+         
       
 --------ABOVE IS WORKING=====   
     
