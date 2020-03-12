@@ -1,17 +1,14 @@
 AWSTemplateFormatVersion: 2010-09-09
-Resources:
+Resources: 
   BastionVPC:
-    Type: 'AWS::EC2::VPC'
+    Type:  AWS::EC2::VPC
     Properties: 
-      CidrBlock: '10.0.0.0/16'
-
+      CidrBlock: 10.0.0.0/16
+  
   BastionSubnet:
-    Type: 'AWS::EC2::Subnet'
+    Type: AWS::EC2::Subnet
     Properties:
-        CidrBlock: '10.0.0.0/24'
-        AvailabilityZone: us-east-1a
-        VpcId:
-                Ref: BastionVPC
+      CidrBlock: 10.0.0.0/24
       
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -22,6 +19,12 @@ Resources:
     Properties:
       VpcId: !Ref BastionVPC
       InternetGatewayId: !Ref InternetGateway
+      
+      
+      
+      
+      
+      
                 
   BastionHost:
     Type: 'AWS::EC2::Instance'
