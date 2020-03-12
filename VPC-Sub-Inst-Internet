@@ -9,6 +9,7 @@ Resources:
     Type: AWS::EC2::Subnet
     Properties:
       CidrBlock: 10.0.0.0/24
+      VpcId: !Ref BastionVPC
       
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -20,11 +21,7 @@ Resources:
       VpcId: !Ref BastionVPC
       InternetGatewayId: !Ref InternetGateway
       
-      
-      
-      
-      
-      
+ 
                 
   BastionHost:
     Type: 'AWS::EC2::Instance'
@@ -33,6 +30,8 @@ Resources:
       ImageId: ami-0a887e401f7654935
        SubnetId:
           Ref: BastionSubnet
+--------ABOVE IS WORKING=====   
+    
     
   MyEIP:
     Type: AWS::EC2::EIP
