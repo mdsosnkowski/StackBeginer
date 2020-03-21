@@ -28,16 +28,25 @@ Resources:
       ImageId: ami-0a887e401f7654935
       SubnetId: !Ref BastionSubnet
       
-  BastionEIP:
-    Type: AWS::EC2::EIP
-    Properties:
-      InstanceId: !Ref BastionHost
       
-  AssociateControlPort:
-    Type: AWS::EC2::EIPAssociation
-    Properties:
-      AllocationId: !GetAtt BastionEIP.AllocationId
 
+  BastionHostNetworkInterface:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      SubnetId: !Ref BastionSubnet
+      
+
+  BastionHost:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0a887e401f7654935
+      SubnetId: !Ref BastionSubnet
+      NetworkInterfaces: 
+      - NetworkInterfaceId: 
+         Ref: BastionHostNetworkInterface
+        DeviceIndex: 0
+      
 
     
     
