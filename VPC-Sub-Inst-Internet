@@ -84,5 +84,5 @@ Resources:
             
 ======== NOTES ==========
 https://stackoverflow.com/questions/47644034/cloudformation-error-value-of-property-networkinterfaces-must-be-a-list-of-obje
-
+>> Network interfaces and an instance-level subnet ID may not be specified on the same request (Service: AmazonEC2; Status Code: 400; Error Code: InvalidParameterCombination; Request ID: 1598d73b-1df8-469d-9b0b-14378fd50749)
 
