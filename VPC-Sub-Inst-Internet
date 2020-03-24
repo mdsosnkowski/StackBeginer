@@ -82,5 +82,7 @@ Resources:
        InstanceId: 
        Ref: BastionHost
             
+======== NOTES ==========
+https://stackoverflow.com/questions/47644034/cloudformation-error-value-of-property-networkinterfaces-must-be-a-list-of-obje
 
 
