@@ -27,57 +27,11 @@ Resources:
       InstanceType: t2.micro
       ImageId: ami-0a887e401f7654935
       SubnetId: !Ref BastionSubnet
-
-  BastionHostNetworkInterface:
-    Type: AWS::EC2::NetworkInterface
-    Properties:
-      SubnetId: !Ref BastionSubnet
-      AssociatePublicIpAddress: 'true'
-     !!!!!!!! Encountered unsupported property AssociatePublicIpAddress
-      !!!!!!!!DeviceIndex: '0'
-      DeleteOnTermination: 'true'
-      
-   NetworkInterfaceAttachment:
-    Type: AWS::EC2::NetworkInterfaceAttachment
-    Properties:
-      InstanceId:
-         Ref: BastionHost
-      NetworkInterfaceId:
-         Ref: BastionHostNetworkInterface
-      DeviceIndex: 0   
-      
-------------------------------------     
-      
-      NetworkInterfaces:
-        - AssociatePublicIpAddress: 'true'
-          DeviceIndex: '0'
-          DeleteOnTermination: 'true'
-          SubnetId: !Ref BastionSubnet
-
-Network interfaces and an instance-level subnet ID
-may not be specified on the same request (Service: AmazonEC2;
-Status Code: 400; Error Code: InvalidParameterCombination; 
-Request ID: ce4c7875-b985-41d3-873f-bc8e97e4cdd3)
-
----------------------------------------
-
-  BastionHostNetworkInterface:
-    Type: AWS::EC2::NetworkInterface
-    Properties:
-      SubnetId: !Ref BastionSubnet
-      AssociatePublicIpAddress: 'true'
-      DeviceIndex: '0'
-      DeleteOnTermination: 'true'
-  
-  NetworkInterfaceAttachment:
-    Type: AWS::EC2::NetworkInterfaceAttachment
-    Properties:
-      InstanceId:
-         Ref: BastionHost
-      NetworkInterfaceId:
-         Ref: BastionHostNetworkInterface
-      DeviceIndex: 0
-        
+      NetworkInterfaces: 
+      - AssociatePublicIpAddress: True
+        DeleteOnTermination: True
+        Description: BastionPublicIP
+        DeviceIndex: 0
    
    
    ----------------------------  
