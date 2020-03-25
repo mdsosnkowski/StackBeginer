@@ -26,15 +26,36 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId: ami-0a887e401f7654935
-      SubnetId: !Ref BastionSubnet
       NetworkInterfaces: 
       - AssociatePublicIpAddress: True
         DeleteOnTermination: True
-        Description: BastionPublicIP
         DeviceIndex: 0
-   
-   
-   ----------------------------  
+        SubnetId: !Ref BastionSubnet
+
+---------------------------------------
+Above line is working
+----------------------------  
+TRY below
+----------
+Route
+Type: AWS::EC2::RouteTable
+Properties: 
+  VpcId: String
+
+====AND===
+
+Type: AWS::EC2::Route
+Properties: 
+  GatewayId: String
+  NetworkInterfaceId: String
+  RouteTableId: String
+
+
+
+
+
+
+----
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
