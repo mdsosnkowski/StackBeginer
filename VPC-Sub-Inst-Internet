@@ -37,23 +37,59 @@ Above line is working
 ----------------------------  
 TRY below
 ----------
-Route
-Type: AWS::EC2::RouteTable
-Properties: 
-  VpcId: String
+AWSTemplateFormatVersion: 2010-09-09
+Resources: 
+  BastionVPC:
+    Type:  AWS::EC2::VPC
+    Properties: 
+      CidrBlock: 10.0.0.0/16
+  
+  BastionSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.0.0/24
+      VpcId: !Ref BastionVPC
+      
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties: {}
+    
+  EC2VPC:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref BastionVPC
+      InternetGatewayId: !Ref InternetGateway
+      
+  
+  BastionHost:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0a887e401f7654935
+      NetworkInterfaces: 
+      - AssociatePublicIpAddress: True
+        DeleteOnTermination: True
+        DeviceIndex: 0
+        SubnetId: !Ref BastionSubnet
+        
+    
+  BastionTable: 
+    Type: AWS::EC2::RouteTable
+    Properties: 
+      VpcId: !Ref BastionVPC
+     
+  BastionRoute:
+    Type: AWS::EC2::Route
+    Properties: 
+      RouteTableId: !Ref BastionTable  
+      DestinationCidrBlock: 0.0.0.0/0
 
-====AND===
-
-Type: AWS::EC2::Route
-Properties: 
-  GatewayId: String
-  NetworkInterfaceId: String
-  RouteTableId: String
-
-
-
-
-
+      
+  BastionGatewayRouteTableAssociation:    
+    Type: AWS::EC2::GatewayRouteTableAssociation
+    Properties: 
+      GatewayId: !Ref InternetGateway
+      RouteTableId: !Ref BastionTable
 
 ----
   InstanceSecurityGroup:
