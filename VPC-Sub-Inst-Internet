@@ -31,12 +31,18 @@ Resources:
         DeleteOnTermination: True
         DeviceIndex: 0
         SubnetId: !Ref BastionSubnet
+    DependsOn:
+      - BastionRoute
+
 
   BastionTable: 
     Type: AWS::EC2::RouteTable
     Properties: 
       VpcId: !Ref BastionVPC
-     
+    DependsOn:
+      - BastionSubnet
+ 
+ 
   BastionRoute:
     Type: AWS::EC2::Route
     Properties: 
