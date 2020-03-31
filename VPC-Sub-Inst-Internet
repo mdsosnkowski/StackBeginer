@@ -49,6 +49,7 @@ Resources:
       RouteTableId: !Ref BastionTable
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
+      SubnetId: !Ref BastionSubnet
 
 
 
