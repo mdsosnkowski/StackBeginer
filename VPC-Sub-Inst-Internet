@@ -20,11 +20,25 @@ Resources:
     Properties:
       VpcId: !Ref BastionVPC
       InternetGatewayId: !Ref InternetGateway
-      
+ 
+  BastionTable: 
+    Type: AWS::EC2::RouteTable
+    Properties: 
+      VpcId: !Ref BastionVPC
+    DependsOn: 
+      - BastionSubnet
+
+  BastionRoute:
+    Type: AWS::EC2::Route
+    Properties: 
+      RouteTableId: !Ref BastionTable
+      GatewayId: !Ref InternetGateway
+      DestinationCidrBlock: 0.0.0.0/0
+
+
   BastionHost:
     Type: AWS::EC2::Instance
     Properties:
-      KeyName: test
       InstanceType: t2.micro
       ImageId: ami-0a887e401f7654935
       NetworkInterfaces: 
@@ -32,24 +46,18 @@ Resources:
         DeleteOnTermination: True
         DeviceIndex: 0
         SubnetId: !Ref BastionSubnet
+      UserData: 
+        Fn::Base64: |
+          #!/bin/bash -xe
+          yum update -y # good practice to update existing packages
+          yum install -y httpd # install web server 
+          systemctl start httpd
+          systemctl enable httpd
+          echo "Hello World" > /var/www/html/index.html       
+     
     DependsOn:
       - BastionRoute
 
-
-  BastionTable: 
-    Type: AWS::EC2::RouteTable
-    Properties: 
-      VpcId: !Ref BastionVPC
-    DependsOn:
-      - BastionSubnet
- 
- 
-  BastionRoute:
-    Type: AWS::EC2::Route
-    Properties: 
-      RouteTableId: !Ref BastionTable
-      GatewayId: !Ref InternetGateway
-      DestinationCidrBlock: 0.0.0.0/0
    
 
 
