@@ -30,7 +30,7 @@ Resources:
       - AssociatePublicIpAddress: True
         DeleteOnTermination: True
         DeviceIndex: 0
-        SubnetId: !Ref BastionSubnet
+      SubnetId: !Ref BastionSubnet
     DependsOn:
       - BastionRoute
 
@@ -47,9 +47,9 @@ Resources:
     Type: AWS::EC2::Route
     Properties: 
       RouteTableId: !Ref BastionTable
-      DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
-      SubnetId: !Ref BastionSubnet
+      DestinationCidrBlock: 0.0.0.0/0
+   
 
 
 
